@@ -71,7 +71,6 @@ public class UserEntityService extends BaseService<UserEntity, Long, UserEntityR
 					.orElseThrow(() -> new UserNotFoundException(updateUserDto.getId()));
 
 			userEntity.setFullName(updateUserDto.getFullName());
-			userEntity.setAvatar(updateUserDto.getEmail());
 			userEntity.setEmail(updateUserDto.getEmail());
 			userEntity.setRoles(updateUserDto.getRoles());
 			return update(userEntity);
@@ -88,7 +87,6 @@ public class UserEntityService extends BaseService<UserEntity, Long, UserEntityR
 
 			userEntity.setEmail(updateAcountDto.getEmail());
 			userEntity.setUsername(updateAcountDto.getEmail());
-			userEntity.setAvatar(updateAcountDto.getAvatar());
 			return update(userEntity);
 		} catch (Exception ex) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ex.getMessage());

@@ -15,6 +15,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -39,9 +41,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class UserEntity implements UserDetails {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 6189678452627071360L;
 
 	@Id
@@ -54,14 +53,10 @@ public class UserEntity implements UserDetails {
 	@JsonIgnore
 	private String password;
 
-	private String avatar;
-
 	private String fullName;
 
 	@Column(unique = true)
 	private String email;
-
-	private String image;
 
 	private boolean enabled;
 
@@ -72,6 +67,21 @@ public class UserEntity implements UserDetails {
 	@CreatedDate
 	private LocalDateTime createdAt;
 
+	@Column(unique = true, nullable = true)
+	private String cuil;
+
+	@Column(unique = true, nullable = true)
+	private String cuit;
+
+	@Column(unique = true, nullable = true)
+	private String numeroLegajo;
+
+	private Double sueldoBasico;
+
+	@ManyToOne
+	@JoinColumn(name = "area_id", nullable = false)
+	private Area area;
+
 	@Builder.Default
 	private LocalDateTime lastPasswordChangeAt = LocalDateTime.now();
 
@@ -80,28 +90,15 @@ public class UserEntity implements UserDetails {
 		return roles.stream().map(ur -> new SimpleGrantedAuthority("ROLE_" + ur.name())).collect(Collectors.toList());
 	}
 
-	/**
-	 * No vamos a gestionar la expiración de cuentas. De hacerse, se tendría que dar
-	 * cuerpo a este método
-	 */
 	@Override
 	public boolean isAccountNonExpired() {
 		return true;
 	}
 
-	/**
-	 * No vamos a gestionar el bloqueo de cuentas. De hacerse, se tendría que dar
-	 * cuerpo a este método
-	 */
 	@Override
 	public boolean isAccountNonLocked() {
 		return true;
 	}
-
-	/**
-	 * No vamos a gestionar la expiración de cuentas. De hacerse, se tendría que dar
-	 * cuerpo a este método
-	 */
 
 	@Override
 	public boolean isCredentialsNonExpired() {

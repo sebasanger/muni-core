@@ -24,22 +24,21 @@ public class UserDtoConverter {
 	}
 
 	public GetUserDetailsDto convertUserEntityToGetUserDetailsDto(UserEntity user) {
-		return GetUserDetailsDto.builder().id(user.getId()).username(user.getUsername()).avatar(user.getAvatar())
-				.fullName(user.getFullName()).email(user.getEmail()).enabled(user.isEnabled())
-				.createdAt(user.getCreatedAt()).lastPasswordChangeAt(user.getLastPasswordChangeAt())
+		return GetUserDetailsDto.builder().id(user.getId()).username(user.getUsername()).fullName(user.getFullName())
+				.email(user.getEmail()).enabled(user.isEnabled()).createdAt(user.getCreatedAt())
+				.lastPasswordChangeAt(user.getLastPasswordChangeAt())
 				.roles(user.getRoles().stream().map(UserRole::name).collect(Collectors.toSet())).build();
 	}
 
 	public UserEntity convertCreateUserDtoToUserEntity(CreateUserDto newUser) {
 		return UserEntity.builder().username(newUser.getEmail())
-				.password(passwordEncoder.encode("myPasswordEncoded12313123")).avatar(newUser.getAvatar())
-				.fullName(newUser.getFullName()).email(newUser.getEmail()).roles(newUser.getRoles()).enabled(false)
-				.build();
+				.password(passwordEncoder.encode("myPasswordEncoded12313123")).fullName(newUser.getFullName())
+				.email(newUser.getEmail()).roles(newUser.getRoles()).enabled(false).build();
 	}
 
 	public UserEntity convertUpdateUserDtoToUserEntity(UpdateUserDto user) {
-		return UserEntity.builder().username(user.getEmail()).avatar(user.getAvatar()).fullName(user.getFullName())
-				.email(user.getEmail()).roles(user.getRoles()).build();
+		return UserEntity.builder().username(user.getEmail()).fullName(user.getFullName()).email(user.getEmail())
+				.roles(user.getRoles()).build();
 	}
 
 	public UserEntity convertUpdateAcountDtoToUserEntity(UpdateAcountDto user) {
