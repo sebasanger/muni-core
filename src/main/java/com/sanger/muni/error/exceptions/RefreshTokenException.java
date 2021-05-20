@@ -1,0 +1,14 @@
+package com.sanger.muni.error.exceptions;
+
+public class RefreshTokenException extends RuntimeException {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3342034462033626819L;
+
+	public RefreshTokenException() {
+		super("Error al resfrescar el token");
+	}
+
+}
