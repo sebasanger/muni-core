@@ -1,15 +1,12 @@
 package com.sanger.muni.model;
 
-import java.util.Set;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,14 +23,12 @@ public class Concepto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(mappedBy = "concepto")
-    private Set<LiquidacionConcepto> conceptos;
-
     private Double importe;
 
     private String descripcion;
 
     @ManyToOne
+    @JoinColumn(name = "tipo_concepto_id", nullable = false)
     private TipoConcepto tipoConcepto;
 
 }

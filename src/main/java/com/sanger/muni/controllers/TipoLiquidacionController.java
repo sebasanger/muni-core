@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/tipo-liquidacion")
+@RequestMapping("/tipoliquidacion")
 @RequiredArgsConstructor
 public class TipoLiquidacionController extends BaseController<TipoLiquidacion, Long, TipoLiquidacionService> {
 

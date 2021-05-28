@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 public class LiquidacionConcepto {
 
     @EmbeddedId
-    LiqudacionConceptoKey id;
+    LiquidacionConceptoKey id;
 
     @ManyToOne
     @MapsId("liquidacionId")
@@ -30,5 +30,12 @@ public class LiquidacionConcepto {
     private Concepto concepto;
 
     private int cantidad;
+
+    public LiquidacionConcepto(Liquidacion liquidacion, Concepto concepto, int cantidad) {
+        this.id = new LiquidacionConceptoKey(liquidacion.getId(), concepto.getId());
+        this.liquidacion = liquidacion;
+        this.concepto = concepto;
+        this.cantidad = cantidad;
+    }
 
 }

@@ -9,11 +9,9 @@ insert into tipos_liquidaciones (id, tipo) values (2,'Extrordinaria');
 insert into tipos_liquidaciones (id, tipo) values (3,'Horas extras');
 insert into tipos_liquidaciones (id, tipo) values (4,'Extra');
 
-insert into tipos_conceptos (id, tipo) values (1,'Asistencia perfecta');
-insert into tipos_conceptos (id, tipo) values (2,'Antiguedad');
-insert into tipos_conceptos (id, tipo) values (3,'Obra social');
-insert into tipos_conceptos (id, tipo) values (4,'Jubilacion');
-insert into tipos_conceptos (id, tipo) values (5,'Nacion sepelio');
+insert into tipos_conceptos (id, tipo) values (1,'Remunerativo');
+insert into tipos_conceptos (id, tipo) values (2,'No remunerativo');
+insert into tipos_conceptos (id, tipo) values (3,'Deduccion');
 
 --USESRS--
 -- Contraseña: Admin1
@@ -71,13 +69,13 @@ insert into conceptos (id, importe, descripcion, tipo_concepto_id) values (3, 10
 
 insert into conceptos (id, importe, descripcion, tipo_concepto_id) values (4, 500, "Antiguedad en cargo bajo", 2);
 
-insert into conceptos (id, importe, descripcion, tipo_concepto_id) values (5, 5000, "Obra social OSDE", 3);
+insert into conceptos (id, importe, descripcion, tipo_concepto_id) values (5, 5000, "Obra social OSDE", 1);
 
-insert into conceptos (id, importe, descripcion, tipo_concepto_id) values (6, 3500, "Obra social PAMI", 3);
+insert into conceptos (id, importe, descripcion, tipo_concepto_id) values (6, 3500, "Obra social PAMI", 1);
 
-insert into conceptos (id, importe, descripcion, tipo_concepto_id) values (7, 2000, "Jubilacion", 4);
+insert into conceptos (id, importe, descripcion, tipo_concepto_id) values (7, 2000, "Jubilacion", 3);
 
-insert into conceptos (id, importe, descripcion, tipo_concepto_id) values (8, 1500, "Sepelio", 5);
+insert into conceptos (id, importe, descripcion, tipo_concepto_id) values (8, 1500, "Sepelio", 3);
 -- CONCEPTOS --
 
 -- LIQUIDACIONES --

@@ -9,16 +9,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Embeddable
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-class LiqudacionConceptoKey implements Serializable {
+@NoArgsConstructor
+@Embeddable
+public class LiquidacionConceptoKey implements Serializable {
 
     @Column(name = "liquidacion_id")
-    Long liquidacionId;
+    private Long liquidacionId;
 
     @Column(name = "concepto_id")
-    Long conceptoId;
+    private Long conceptoId;
 
 }
