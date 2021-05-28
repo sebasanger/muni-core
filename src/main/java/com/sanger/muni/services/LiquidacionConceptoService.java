@@ -12,6 +12,6 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class LiquidacionConceptoService
-        extends BaseService<LiquidacionConcepto, LiquidacionConceptoKey, LiquidacionConceptoRepository> {
+                extends BaseService<LiquidacionConcepto, LiquidacionConceptoKey, LiquidacionConceptoRepository> {
 
 }

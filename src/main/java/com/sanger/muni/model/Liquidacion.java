@@ -13,7 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
@@ -42,10 +43,11 @@ public class Liquidacion {
 
     @ManyToOne
     @JoinColumn(name = "tipo_liquidacion_id", nullable = false)
+
     private TipoLiquidacion tipoLiquidacion;
 
     @OneToMany(mappedBy = "liquidacion")
-    @JsonIgnore
+    @JsonBackReference
     private Set<LiquidacionConcepto> liquidacionConceptos;
 
     private String area;

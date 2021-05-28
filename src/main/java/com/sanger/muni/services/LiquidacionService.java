@@ -1,7 +1,12 @@
 package com.sanger.muni.services;
 
+import com.sanger.muni.dto.liquidacion.AddConceptoDto;
+import com.sanger.muni.dto.liquidacion.DeleteConceptoDto;
 import com.sanger.muni.error.exceptions.EntityNotFoundException;
+import com.sanger.muni.model.Concepto;
 import com.sanger.muni.model.Liquidacion;
+import com.sanger.muni.model.LiquidacionConcepto;
+import com.sanger.muni.model.LiquidacionConceptoKey;
 import com.sanger.muni.model.TipoLiquidacion;
 import com.sanger.muni.model.UserEntity;
 import com.sanger.muni.repository.LiquidacionRepository;
@@ -16,6 +21,8 @@ import lombok.RequiredArgsConstructor;
 public class LiquidacionService extends BaseService<Liquidacion, Long, LiquidacionRepository> {
     private final TipoLiquidacionService tipoLiquidacionService;
     private final UserEntityService userEntityService;
+    private final ConceptoService conceptoService;
+    private final LiquidacionConceptoService liquidacionConceptosService;
 
     public Liquidacion saveLiquidacion(Liquidacion liquidacion) {
 
@@ -33,16 +40,53 @@ public class LiquidacionService extends BaseService<Liquidacion, Long, Liquidaci
 
         liquidacion.setTipoLiquidacion(tipoLiquidacion);
 
-        /*
-         * liquidacion.setDescripciones((liquidacion.getDescripciones().stream().map(a
-         * -> { Concepto concepto =
-         * conceptoService.findById(a.getConcepto().getId()).get(); Descripcion
-         * descripcion = new Descripcion(); descripcion.setConcepto(concepto);
-         * descripcion.setCantidad(a.getCantidad()); return descripcion;
-         * }).collect(Collectors.toSet())));
-         * 
-         */
-        return save(liquidacion);
+        Liquidacion liquidacionCreada = save(liquidacion);
+
+        liquidacion.getLiquidacionConceptos().forEach(a -> {
+
+            Concepto concepto = conceptoService.findById(a.getConcepto().getId()).get();
+
+            LiquidacionConcepto liquidacionConcepto = new LiquidacionConcepto();
+            LiquidacionConceptoKey liquidacionConceptoKey = new LiquidacionConceptoKey();
+            liquidacionConceptoKey.setConceptoId(concepto.getId());
+            liquidacionConceptoKey.setLiquidacionId(liquidacionCreada.getId());
+            liquidacionConcepto.setId(liquidacionConceptoKey);
+
+            liquidacionConcepto.setConcepto(concepto);
+            liquidacionConcepto.setLiquidacion(liquidacionCreada);
+            liquidacionConcepto.setCantidad(a.getCantidad());
+
+            liquidacionConceptosService.save(liquidacionConcepto);
+        });
+        return save(liquidacionCreada);
+
+    }
+
+    public LiquidacionConcepto addConcepto(AddConceptoDto addConceptoDto) {
+        Concepto concepto = conceptoService.findById(addConceptoDto.getConceptoId()).get();
+        Liquidacion liquidacion = this.repository.findById(addConceptoDto.getLiquidacionId()).get();
+
+        LiquidacionConcepto liquidacionConcepto = new LiquidacionConcepto();
+        LiquidacionConceptoKey liquidacionConceptoKey = new LiquidacionConceptoKey();
+        liquidacionConceptoKey.setConceptoId(concepto.getId());
+        liquidacionConceptoKey.setLiquidacionId(liquidacion.getId());
+        liquidacionConcepto.setId(liquidacionConceptoKey);
+
+        liquidacionConcepto.setConcepto(concepto);
+        liquidacionConcepto.setLiquidacion(liquidacion);
+        liquidacionConcepto.setCantidad(addConceptoDto.getCantidad());
+
+        return liquidacionConceptosService.save(liquidacionConcepto);
+
+    }
+
+    public void deleteConcepto(DeleteConceptoDto deleteConceptoDto) {
+
+        LiquidacionConceptoKey liquidacionConceptoKey = new LiquidacionConceptoKey();
+        liquidacionConceptoKey.setConceptoId(deleteConceptoDto.getConceptoId());
+        liquidacionConceptoKey.setLiquidacionId(deleteConceptoDto.getLiquidacionId());
+
+        liquidacionConceptosService.deleteById(liquidacionConceptoKey);
 
     }
 }
