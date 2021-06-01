@@ -61,21 +61,21 @@ insert into user_entity_roles (user_entity_id, roles) values (6,'USER');
 -- USESRS --
 
 -- CONCEPTOS --
-insert into conceptos (id, importe, descripcion, tipo_concepto_id) values (1, 3000, "Por no faltar al trabajo", 1);
+insert into conceptos (id, descripcion, tipo_concepto_id) values (1, "Por no faltar al trabajo", 1);
 
-insert into conceptos (id, importe, descripcion, tipo_concepto_id) values (2, 5000, "Por no faltar al trabajo en temporada alta", 1);
+insert into conceptos (id, descripcion, tipo_concepto_id) values (2, "Por no faltar al trabajo en temporada alta", 1);
 
-insert into conceptos (id, importe, descripcion, tipo_concepto_id) values (3, 1000, "Antiguedad en cargo alto", 2);
+insert into conceptos (id, descripcion, tipo_concepto_id) values (3, "Antiguedad en cargo alto", 2);
 
-insert into conceptos (id, importe, descripcion, tipo_concepto_id) values (4, 500, "Antiguedad en cargo bajo", 2);
+insert into conceptos (id, descripcion, tipo_concepto_id) values (4,"Antiguedad en cargo bajo", 2);
 
-insert into conceptos (id, importe, descripcion, tipo_concepto_id) values (5, 5000, "Obra social OSDE", 1);
+insert into conceptos (id, descripcion, tipo_concepto_id) values (5, "Obra social OSDE", 1);
 
-insert into conceptos (id, importe, descripcion, tipo_concepto_id) values (6, 3500, "Obra social PAMI", 1);
+insert into conceptos (id, descripcion, tipo_concepto_id) values (6, "Obra social PAMI", 1);
 
-insert into conceptos (id, importe, descripcion, tipo_concepto_id) values (7, 2000, "Jubilacion", 3);
+insert into conceptos (id, descripcion, tipo_concepto_id) values (7, "Jubilacion", 3);
 
-insert into conceptos (id, importe, descripcion, tipo_concepto_id) values (8, 1500, "Sepelio", 3);
+insert into conceptos (id, descripcion, tipo_concepto_id) values (8, "Sepelio", 3);
 -- CONCEPTOS --
 
 -- LIQUIDACIONES --
@@ -84,14 +84,26 @@ insert into liquidaciones (id, user_id, tipo_liquidacion_id, area, periodo, secc
 numero_recibo, total_remuneracion_con_aportes, total_remuneracion_sin_aportes, total_cobrar,deducciones) 
 values (1, 1, 1, "sistemas", CURRENT_TIMESTAMP, "", CURRENT_TIMESTAMP, "1233412", 18000, 18000, 14000, 4000);
 
-insert into liquidacion_concepto (liquidacion_id, concepto_id, cantidad) values (1, 1, 1);
+insert into liquidacion_concepto (liquidacion_id, concepto_id, cantidad, importe) values (1, 1, 1, 500);
 
-insert into liquidacion_concepto (liquidacion_id, concepto_id, cantidad) values (1, 3, 5);
+insert into liquidacion_concepto (liquidacion_id, concepto_id, cantidad, importe) values (1, 3, 5, 600);
 
-insert into liquidacion_concepto (liquidacion_id, concepto_id, cantidad) values (1, 5, 1);
+insert into liquidacion_concepto (liquidacion_id, concepto_id, cantidad, importe) values (1, 5, 1, 800);
 
-insert into liquidacion_concepto (liquidacion_id, concepto_id, cantidad) values (1, 7, 1);
+insert into liquidacion_concepto (liquidacion_id, concepto_id, cantidad, importe) values (1, 7, 1, 1200);
 --1--
+
+--2--
+insert into liquidaciones (id, user_id, tipo_liquidacion_id, area, periodo, seccion, fecha_ingreso,
+numero_recibo, total_remuneracion_con_aportes, total_remuneracion_sin_aportes, total_cobrar,deducciones) 
+values (2, 2, 1, "Recusos humanos", CURRENT_TIMESTAMP, "asda", CURRENT_TIMESTAMP, "122333412", 16000, 16000, 12000, 2000);
+
+insert into liquidacion_concepto (liquidacion_id, concepto_id, cantidad, importe) values (2, 1, 1, 700);
+
+insert into liquidacion_concepto (liquidacion_id, concepto_id, cantidad, importe) values (2, 5, 2, 400);
+
+insert into liquidacion_concepto (liquidacion_id, concepto_id, cantidad, importe) values (2, 6, 1, 800);
+--2--
 -- LIQUIDACIONES --
 
 

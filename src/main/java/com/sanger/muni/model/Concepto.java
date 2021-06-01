@@ -23,8 +23,6 @@ public class Concepto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Double importe;
-
     private String descripcion;
 
     @ManyToOne

@@ -13,6 +13,7 @@ public class AddConceptoDto {
 
     private Long conceptoId;
     private Long liquidacionId;
-    private int cantidad;
+    private Short cantidad;
+    private Double importe;
 
 }

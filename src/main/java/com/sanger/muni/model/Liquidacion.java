@@ -1,7 +1,7 @@
 package com.sanger.muni.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -52,9 +52,9 @@ public class Liquidacion {
 
     private String area;
 
-    private Date fechaIngreso;
+    private LocalDate fechaIngreso;
 
-    private Date periodo;
+    private LocalDate periodo;
 
     private String seccion;
 

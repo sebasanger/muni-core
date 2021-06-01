@@ -55,6 +55,7 @@ public class LiquidacionService extends BaseService<Liquidacion, Long, Liquidaci
             liquidacionConcepto.setConcepto(concepto);
             liquidacionConcepto.setLiquidacion(liquidacionCreada);
             liquidacionConcepto.setCantidad(a.getCantidad());
+            liquidacionConcepto.setImporte(a.getImporte());
 
             liquidacionConceptosService.save(liquidacionConcepto);
         });
@@ -75,6 +76,7 @@ public class LiquidacionService extends BaseService<Liquidacion, Long, Liquidaci
         liquidacionConcepto.setConcepto(concepto);
         liquidacionConcepto.setLiquidacion(liquidacion);
         liquidacionConcepto.setCantidad(addConceptoDto.getCantidad());
+        liquidacionConcepto.setImporte(addConceptoDto.getImporte());
 
         return liquidacionConceptosService.save(liquidacionConcepto);
 

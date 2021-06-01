@@ -30,6 +30,12 @@ public class UserDtoConverter {
 				.roles(user.getRoles().stream().map(UserRole::name).collect(Collectors.toSet())).build();
 	}
 
+	public GetUsersPaginatedDto convertUserEntityToGetUserPaginatedDto(UserEntity user) {
+		return GetUsersPaginatedDto.builder().id(user.getId()).username(user.getUsername()).fullName(user.getFullName())
+				.email(user.getEmail()).area(user.getArea()).numeroLegajo(user.getNumeroLegajo())
+				.roles(user.getRoles().stream().map(UserRole::name).collect(Collectors.toSet())).build();
+	}
+
 	public UserEntity convertCreateUserDtoToUserEntity(CreateUserDto newUser) {
 		return UserEntity.builder().username(newUser.getEmail())
 				.password(passwordEncoder.encode("myPasswordEncoded12313123")).fullName(newUser.getFullName())

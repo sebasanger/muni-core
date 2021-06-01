@@ -29,13 +29,16 @@ public class LiquidacionConcepto {
     @JoinColumn(name = "concepto_id")
     private Concepto concepto;
 
-    private int cantidad;
+    private Short cantidad;
 
-    public LiquidacionConcepto(Liquidacion liquidacion, Concepto concepto, int cantidad) {
+    private Double importe;
+
+    public LiquidacionConcepto(Liquidacion liquidacion, Concepto concepto, Short cantidad, Double importe) {
         this.id = new LiquidacionConceptoKey(liquidacion.getId(), concepto.getId());
         this.liquidacion = liquidacion;
         this.concepto = concepto;
         this.cantidad = cantidad;
+        this.importe = importe;
     }
 
 }

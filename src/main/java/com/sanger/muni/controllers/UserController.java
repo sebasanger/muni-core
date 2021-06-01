@@ -9,6 +9,7 @@ import com.sanger.muni.dto.user.CheckEmailIsValidDto;
 import com.sanger.muni.dto.user.CreateUserDto;
 import com.sanger.muni.dto.user.GetUserDetailsDto;
 import com.sanger.muni.dto.user.GetUsersDto;
+import com.sanger.muni.dto.user.GetUsersPaginatedDto;
 import com.sanger.muni.dto.user.UpdateAcountDto;
 import com.sanger.muni.dto.user.UpdateUserDto;
 import com.sanger.muni.dto.user.UserDtoConverter;
@@ -62,7 +63,7 @@ public class UserController {
 		if (result.isEmpty()) {
 			throw new UserNotFoundException();
 		} else {
-			Page<GetUsersDto> dtoList = result.map(userDtoConverter::convertUserEntityToGetUserDto);
+			Page<GetUsersPaginatedDto> dtoList = result.map(userDtoConverter::convertUserEntityToGetUserPaginatedDto);
 
 			return ResponseEntity.ok().body(dtoList);
 		}
