@@ -1,5 +1,9 @@
 package com.sanger.muni.dto.liquidacion;
 
+import java.util.Set;
+
+import javax.validation.constraints.NotNull;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,9 +15,10 @@ import lombok.NoArgsConstructor;
 @Builder
 public class AddConceptoDto {
 
-    private Long conceptoId;
+    @NotNull
+    private Set<NewConceptoDto> conceptos;
+
+    @NotNull
     private Long liquidacionId;
-    private Short cantidad;
-    private Double importe;
 
 }

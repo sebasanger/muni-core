@@ -81,9 +81,14 @@ public class Liquidacion {
         return this.liquidacionConceptos.stream().mapToDouble(LiquidacionConcepto::getSubtotal).sum();
     }
 
-    public void addConcepto(LiquidacionConcepto liquidacionConcepto) {
-        liquidacionConceptos.add(liquidacionConcepto);
+    public void addLiquidacionConcepto(LiquidacionConcepto liquidacionConcepto) {
+        this.liquidacionConceptos.add(liquidacionConcepto);
         liquidacionConcepto.setLiquidacion(this);
+    }
+
+    public void deleteLiquidacionConcepto(LiquidacionConcepto liquidacionConcepto) {
+        this.liquidacionConceptos.remove(liquidacionConcepto);
+        liquidacionConcepto.setLiquidacion(null);
     }
 
 }
