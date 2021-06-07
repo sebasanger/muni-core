@@ -2,8 +2,10 @@ package com.sanger.muni.model;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
@@ -13,17 +15,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Data
@@ -43,12 +44,14 @@ public class Liquidacion {
 
     @ManyToOne
     @JoinColumn(name = "tipo_liquidacion_id", nullable = false)
-
     private TipoLiquidacion tipoLiquidacion;
 
-    @OneToMany(mappedBy = "liquidacion")
-    @JsonBackReference
-    private Set<LiquidacionConcepto> liquidacionConceptos;
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @Builder.Default
+    @JsonManagedReference
+    @OneToMany(mappedBy = "liquidacion", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<LiquidacionConcepto> liquidacionConceptos = new HashSet<>();
 
     private String area;
 
@@ -73,5 +76,14 @@ public class Liquidacion {
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    public Double getTotal() {
+        return this.liquidacionConceptos.stream().mapToDouble(LiquidacionConcepto::getSubtotal).sum();
+    }
+
+    public void addConcepto(LiquidacionConcepto liquidacionConcepto) {
+        liquidacionConceptos.add(liquidacionConcepto);
+        liquidacionConcepto.setLiquidacion(this);
+    }
 
 }

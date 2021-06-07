@@ -1,31 +1,36 @@
 package com.sanger.muni.model;
 
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class LiquidacionConcepto {
 
-    @EmbeddedId
-    LiquidacionConceptoKey id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
+    @JsonBackReference
     @ManyToOne
-    @MapsId("liquidacionId")
     @JoinColumn(name = "liquidacion_id")
     private Liquidacion liquidacion;
 
     @ManyToOne
-    @MapsId("conceptoId")
     @JoinColumn(name = "concepto_id")
     private Concepto concepto;
 
@@ -33,12 +38,8 @@ public class LiquidacionConcepto {
 
     private Double importe;
 
-    public LiquidacionConcepto(Liquidacion liquidacion, Concepto concepto, Short cantidad, Double importe) {
-        this.id = new LiquidacionConceptoKey(liquidacion.getId(), concepto.getId());
-        this.liquidacion = liquidacion;
-        this.concepto = concepto;
-        this.cantidad = cantidad;
-        this.importe = importe;
+    public Double getSubtotal() {
+        return this.cantidad * this.getImporte();
     }
 
 }

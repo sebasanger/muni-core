@@ -1,8 +1,8 @@
-insert into areas (id, area) values (1,'Sistemas');
-insert into areas (id, area) values (2,'Recusos humanos');
-insert into areas (id, area) values (3,'Mesa de entrada');
-insert into areas (id, area) values (4,'Gerencia');
-insert into areas (id, area) values (5,'Pagos');
+insert into areas (id, area, codigo) values (1,'Sistemas', "kjkszpj");
+insert into areas (id, area, codigo) values (2,'Recusos humanos', "sdfsdf");
+insert into areas (id, area, codigo) values (3,'Mesa de entrada', "ffad");
+insert into areas (id, area, codigo) values (4,'Gerencia', "dfgnbcv");
+insert into areas (id, area, codigo) values (5,'Pagos', "ertfgdfg");
 
 insert into tipos_liquidaciones (id, tipo) values (1,'Normal');
 insert into tipos_liquidaciones (id, tipo) values (2,'Extrordinaria');
