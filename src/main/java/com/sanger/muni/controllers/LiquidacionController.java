@@ -4,6 +4,7 @@ import javax.validation.Valid;
 
 import com.sanger.muni.dto.liquidacion.AddConceptoDto;
 import com.sanger.muni.dto.liquidacion.NewLiquidacionDto;
+import com.sanger.muni.dto.liquidacion.UpdateLiquidacionDto;
 import com.sanger.muni.model.Liquidacion;
 import com.sanger.muni.model.UserEntity;
 import com.sanger.muni.services.LiquidacionService;
@@ -31,6 +32,13 @@ public class LiquidacionController extends BaseController<Liquidacion, Long, Liq
     public ResponseEntity<Liquidacion> create(@Valid @RequestBody NewLiquidacionDto newLiquidacion,
             @AuthenticationPrincipal UserEntity user) {
         return ResponseEntity.status(HttpStatus.CREATED).body(liquidacionService.saveLiquidacion(newLiquidacion));
+    }
+
+    @PutMapping("/")
+    public ResponseEntity<Liquidacion> update(@Valid @RequestBody UpdateLiquidacionDto updateLiquidacionDto,
+            @AuthenticationPrincipal UserEntity user) {
+        return ResponseEntity.status(HttpStatus.ACCEPTED)
+                .body(liquidacionService.updateLiquidacion(updateLiquidacionDto));
     }
 
     @PutMapping("add-concepto")
