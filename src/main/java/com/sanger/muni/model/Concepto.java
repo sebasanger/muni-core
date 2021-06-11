@@ -1,11 +1,12 @@
 package com.sanger.muni.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -26,8 +27,8 @@ public class Concepto {
 
     private String descripcion;
 
-    @ManyToOne
-    @JoinColumn(name = "tipo_concepto_id", nullable = false)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipoConcepto")
     private TipoConcepto tipoConcepto;
 
 }

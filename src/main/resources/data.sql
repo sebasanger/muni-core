@@ -9,9 +9,6 @@ insert into tipos_liquidaciones (id, tipo) values (2,'Extrordinaria');
 insert into tipos_liquidaciones (id, tipo) values (3,'Horas extras');
 insert into tipos_liquidaciones (id, tipo) values (4,'Extra');
 
-insert into tipos_conceptos (id, tipo) values (1,'Remunerativo');
-insert into tipos_conceptos (id, tipo) values (2,'No remunerativo');
-insert into tipos_conceptos (id, tipo) values (3,'Deduccion');
 
 --USESRS--
 -- Contraseña: Admin1
@@ -61,21 +58,21 @@ insert into user_entity_roles (user_entity_id, roles) values (6,'USER');
 -- USESRS --
 
 -- CONCEPTOS --
-insert into conceptos (id, descripcion, tipo_concepto_id) values (1, "Por no faltar al trabajo", 1);
+insert into conceptos (id, descripcion, tipo_concepto) values (1, "Por no faltar al trabajo", "NO_REMUNERATIVO");
 
-insert into conceptos (id, descripcion, tipo_concepto_id) values (2, "Por no faltar al trabajo en temporada alta", 1);
+insert into conceptos (id, descripcion, tipo_concepto) values (2, "Por no faltar al trabajo en temporada alta", "NO_REMUNERATIVO");
 
-insert into conceptos (id, descripcion, tipo_concepto_id) values (3, "Antiguedad en cargo alto", 2);
+insert into conceptos (id, descripcion, tipo_concepto) values (3, "Antiguedad en cargo alto", "REMUNERATIVO");
 
-insert into conceptos (id, descripcion, tipo_concepto_id) values (4,"Antiguedad en cargo bajo", 2);
+insert into conceptos (id, descripcion, tipo_concepto) values (4,"Antiguedad en cargo bajo", "NO_REMUNERATIVO");
 
-insert into conceptos (id, descripcion, tipo_concepto_id) values (5, "Obra social OSDE", 1);
+insert into conceptos (id, descripcion, tipo_concepto) values (5, "Obra social OSDE", "REMUNERATIVO");
 
-insert into conceptos (id, descripcion, tipo_concepto_id) values (6, "Obra social PAMI", 1);
+insert into conceptos (id, descripcion, tipo_concepto) values (6, "Obra social PAMI", "DEDUCCION");
 
-insert into conceptos (id, descripcion, tipo_concepto_id) values (7, "Jubilacion", 3);
+insert into conceptos (id, descripcion, tipo_concepto) values (7, "Jubilacion", "REMUNERATIVO");
 
-insert into conceptos (id, descripcion, tipo_concepto_id) values (8, "Sepelio", 3);
+insert into conceptos (id, descripcion, tipo_concepto) values (8, "Sepelio", "DEDUCCION");
 -- CONCEPTOS --
 
 -- LIQUIDACIONES --
