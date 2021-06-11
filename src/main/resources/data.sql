@@ -78,8 +78,8 @@ insert into conceptos (id, descripcion, tipo_concepto) values (8, "Sepelio", "DE
 -- LIQUIDACIONES --
 --1--
 insert into liquidaciones (id, user_id, tipo_liquidacion_id, area, periodo, seccion, fecha_ingreso,
-numero_recibo, total_remuneracion_con_aportes, total_remuneracion_sin_aportes, total_cobrar,deducciones) 
-values (1, 1, 1, "sistemas", CURRENT_TIMESTAMP, "", CURRENT_TIMESTAMP, "1233412", 18000, 18000, 14000, 4000);
+numero_recibo) 
+values (1, 1, 1, "sistemas", CURRENT_TIMESTAMP, "", CURRENT_TIMESTAMP, "1233412");
 
 insert into liquidacion_concepto (liquidacion_id, concepto_id, cantidad, importe) values (1, 1, 1, 500);
 
@@ -92,15 +92,55 @@ insert into liquidacion_concepto (liquidacion_id, concepto_id, cantidad, importe
 
 --2--
 insert into liquidaciones (id, user_id, tipo_liquidacion_id, area, periodo, seccion, fecha_ingreso,
-numero_recibo, total_remuneracion_con_aportes, total_remuneracion_sin_aportes, total_cobrar,deducciones) 
-values (2, 2, 1, "Recusos humanos", CURRENT_TIMESTAMP, "asda", CURRENT_TIMESTAMP, "122333412", 16000, 16000, 12000, 2000);
+numero_recibo) 
+values (2, 2, 1, "Recusos humanos", CURRENT_TIMESTAMP, "asda", CURRENT_TIMESTAMP, "122333412");
 
 insert into liquidacion_concepto (liquidacion_id, concepto_id, cantidad, importe) values (2, 1, 1, 700);
 
 insert into liquidacion_concepto (liquidacion_id, concepto_id, cantidad, importe) values (2, 5, 2, 400);
 
 insert into liquidacion_concepto (liquidacion_id, concepto_id, cantidad, importe) values (2, 6, 1, 800);
+
+insert into liquidacion_concepto (liquidacion_id, concepto_id, cantidad, importe) values (2, 2, 1, 850);
+
+insert into liquidacion_concepto (liquidacion_id, concepto_id, cantidad, importe) values (2, 8, 1, 920);
 --2--
+
+--3--
+insert into liquidaciones (id, user_id, tipo_liquidacion_id, area, periodo, seccion, fecha_ingreso,
+numero_recibo) 
+values (3, 3, 1, "Recusos humanos", CURRENT_TIMESTAMP, "afgsdgdg", CURRENT_TIMESTAMP, "23433234");
+
+insert into liquidacion_concepto (liquidacion_id, concepto_id, cantidad, importe) values (3, 2, 2, 700);
+
+insert into liquidacion_concepto (liquidacion_id, concepto_id, cantidad, importe) values (3, 3, 1, 400);
+
+insert into liquidacion_concepto (liquidacion_id, concepto_id, cantidad, importe) values (3, 6, 1, 1000);
+--3--
+
+--4--
+insert into liquidaciones (id, user_id, tipo_liquidacion_id, area, periodo, seccion, fecha_ingreso,
+numero_recibo) 
+values (4, 3, 1, "Contabilidad", CURRENT_TIMESTAMP, "asda", CURRENT_TIMESTAMP, "122333412");
+
+insert into liquidacion_concepto (liquidacion_id, concepto_id, cantidad, importe) values (4, 1, 2, 700);
+
+insert into liquidacion_concepto (liquidacion_id, concepto_id, cantidad, importe) values (4, 3, 3, 400);
+
+insert into liquidacion_concepto (liquidacion_id, concepto_id, cantidad, importe) values (4, 6, 1, 800);
+--4--
+
+--5--
+insert into liquidaciones (id, user_id, tipo_liquidacion_id, area, periodo, seccion, fecha_ingreso,
+numero_recibo) 
+values (5, 4, 1, "Gestion", CURRENT_TIMESTAMP, "asda", CURRENT_TIMESTAMP, "122333412");
+
+insert into liquidacion_concepto (liquidacion_id, concepto_id, cantidad, importe) values (5, 2, 1, 700);
+
+insert into liquidacion_concepto (liquidacion_id, concepto_id, cantidad, importe) values (5, 5, 1, 400);
+
+insert into liquidacion_concepto (liquidacion_id, concepto_id, cantidad, importe) values (5, 3, 2, 800);
+--5--
 -- LIQUIDACIONES --
 
 

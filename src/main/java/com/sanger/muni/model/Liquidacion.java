@@ -63,22 +63,31 @@ public class Liquidacion {
 
     private String numeroRecibo;
 
-    private Double totalRemuneracionConAportes;
-
-    private Double totalRemuneracionSinAportes;
-
-    private Double deducciones;
-
-    private Double totalCobrar;
-
     @CreatedDate
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
+    public Double getTotalRemunerativo() {
+        return this.liquidacionConceptos.stream().filter(liquidacionConcepto -> liquidacionConcepto.getConcepto()
+                .getTipoConcepto().equals(TipoConcepto.REMUNERATIVO)).mapToDouble(LiquidacionConcepto::getSubtotal)
+                .sum();
+    }
+
+    public Double getTotalNoRemunerativo() {
+        return this.liquidacionConceptos.stream().filter(liquidacionConcepto -> liquidacionConcepto.getConcepto()
+                .getTipoConcepto().equals(TipoConcepto.NO_REMUNERATIVO)).mapToDouble(LiquidacionConcepto::getSubtotal)
+                .sum();
+    }
+
+    public Double getTotalDeducciones() {
+        return this.liquidacionConceptos.stream().filter(liquidacionConcepto -> liquidacionConcepto.getConcepto()
+                .getTipoConcepto().equals(TipoConcepto.DEDUCCION)).mapToDouble(LiquidacionConcepto::getSubtotal).sum();
+    }
+
     public Double getTotal() {
-        return this.liquidacionConceptos.stream().mapToDouble(LiquidacionConcepto::getSubtotal).sum();
+        return (this.getTotalNoRemunerativo() + this.getTotalRemunerativo()) - this.getTotalDeducciones();
     }
 
     public void addLiquidacionConcepto(LiquidacionConcepto liquidacionConcepto) {
