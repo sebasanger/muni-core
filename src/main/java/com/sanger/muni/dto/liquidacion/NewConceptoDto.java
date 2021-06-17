@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class NewConceptoDto {
 
     private Long id;
-    private Short cantidad;
+    private Float cantidad;
     private Double importe;
 
 }

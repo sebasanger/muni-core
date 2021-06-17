@@ -34,7 +34,7 @@ public class LiquidacionConcepto {
     @JoinColumn(name = "concepto_id")
     private Concepto concepto;
 
-    private Short cantidad;
+    private Float cantidad;
 
     private Double importe;
 
