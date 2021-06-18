@@ -39,11 +39,11 @@ public class Liquidacion {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = true)
     private UserEntity user;
 
     @ManyToOne
-    @JoinColumn(name = "tipo_liquidacion_id", nullable = false)
+    @JoinColumn(name = "tipo_liquidacion_id", nullable = true)
     private TipoLiquidacion tipoLiquidacion;
 
     @EqualsAndHashCode.Exclude

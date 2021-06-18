@@ -27,11 +27,11 @@ public class LiquidacionConcepto {
 
     @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "liquidacion_id")
+    @JoinColumn(name = "liquidacion_id", nullable = true)
     private Liquidacion liquidacion;
 
     @ManyToOne
-    @JoinColumn(name = "concepto_id")
+    @JoinColumn(name = "concepto_id", nullable = true)
     private Concepto concepto;
 
     private Float cantidad;

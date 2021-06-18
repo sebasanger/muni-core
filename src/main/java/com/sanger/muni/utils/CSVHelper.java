@@ -3,9 +3,7 @@ package com.sanger.muni.utils;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import com.sanger.muni.model.Concepto;
@@ -17,9 +15,15 @@ import com.sanger.muni.model.UserEntity;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
 public class CSVHelper {
+
     public static String TYPE = "text/csv";
 
     public static boolean hasCSVFormat(MultipartFile file) {
@@ -31,13 +35,15 @@ public class CSVHelper {
         return true;
     }
 
-    public static List<Liquidacion> csvToLiquidaciones(InputStream is) {
+    public static Set<Liquidacion> csvToLiquidaciones(InputStream is) {
+
+        String tipo = "eleg,esec,edir,ecat,ecatnew,enom,edom,edoc,efing,banco,cuil,dire";
 
         try (BufferedReader fileReader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
                 CSVParser csvParser = new CSVParser(fileReader,
                         CSVFormat.DEFAULT.withFirstRecordAsHeader().withIgnoreHeaderCase().withTrim());) {
 
-            List<Liquidacion> liquidaciones = new ArrayList<Liquidacion>();
+            Set<Liquidacion> liquidaciones = new HashSet<>();
 
             Iterable<CSVRecord> csvRecords = csvParser.getRecords();
 
@@ -45,8 +51,10 @@ public class CSVHelper {
 
                 Liquidacion liquidacion = new Liquidacion();
                 UserEntity user = new UserEntity();
-                user.setNumeroLegajo(csvRecord.get(1));
-                liquidacion.setId(1L);
+                user.setNumeroLegajo(csvRecord.get("eleg"));
+                user.setFullName(csvRecord.get("enom"));
+                user.setCuil(csvRecord.get("cuil"));
+
                 liquidacion.setUser(user);
 
                 liquidaciones.add(liquidacion);
@@ -73,9 +81,12 @@ public class CSVHelper {
             for (CSVRecord csvRecord : csvRecords) {
 
                 LiquidacionConcepto liquidacionConcepto = new LiquidacionConcepto();
+
                 Concepto concepto = new Concepto();
+
                 concepto.setId(Long.parseLong(csvRecord.get("concepto")));
                 concepto.setDescripcion(csvRecord.get("descrip"));
+                liquidacionConcepto.setConcepto(concepto);
 
                 if (Integer.parseInt(csvRecord.get("tipo")) == 1) {
                     concepto.setTipoConcepto(TipoConcepto.REMUNERATIVO);
@@ -95,40 +106,6 @@ public class CSVHelper {
             }
 
             return liquidacionesConceptos;
-        } catch (Exception e) {
-            System.err.println(e);
-            throw new RuntimeException("fail to parse CSV file: " + e.getMessage());
-        }
-    }
-
-    public static Set<Concepto> csvToConceptos(InputStream is) {
-        try (BufferedReader fileReader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-                CSVParser csvParser = new CSVParser(fileReader,
-                        CSVFormat.DEFAULT.withFirstRecordAsHeader().withIgnoreHeaderCase().withTrim());) {
-
-            Set<Concepto> conceptos = new HashSet<>();
-
-            Iterable<CSVRecord> csvRecords = csvParser.getRecords();
-
-            for (CSVRecord csvRecord : csvRecords) {
-
-                Concepto concepto = new Concepto();
-                concepto.setId(Long.parseLong(csvRecord.get("concepto")));
-                concepto.setDescripcion(csvRecord.get("descrip"));
-
-                if (Integer.parseInt(csvRecord.get("tipo")) == 1) {
-                    concepto.setTipoConcepto(TipoConcepto.REMUNERATIVO);
-                } else if (Integer.parseInt(csvRecord.get("tipo")) == 2) {
-                    concepto.setTipoConcepto(TipoConcepto.NO_REMUNERATIVO);
-                } else if (Integer.parseInt(csvRecord.get("tipo")) == 3) {
-                    concepto.setTipoConcepto(TipoConcepto.DEDUCCION);
-                }
-
-                conceptos.add(concepto);
-
-            }
-
-            return conceptos;
         } catch (Exception e) {
             System.err.println(e);
             throw new RuntimeException("fail to parse CSV file: " + e.getMessage());
