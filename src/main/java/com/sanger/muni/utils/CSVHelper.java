@@ -37,7 +37,7 @@ public class CSVHelper {
 
     public static Set<Liquidacion> csvToLiquidaciones(InputStream is) {
 
-        String tipo = "eleg,esec,edir,ecat,ecatnew,enom,edom,edoc,efing,banco,cuil,dire";
+        // "eleg,esec,edir,ecat,ecatnew,enom,edom,edoc,efing,banco,cuil,dire";
 
         try (BufferedReader fileReader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
                 CSVParser csvParser = new CSVParser(fileReader,

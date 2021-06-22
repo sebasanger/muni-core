@@ -34,7 +34,7 @@ public class ImportacionService {
 
             liquidacionRepository.saveAll(liquidaciones);
 
-            liquidacionConceptoRepository.saveAll(liquidacionConceptos);
+            // liquidacionConceptoRepository.saveAll(liquidacionConceptos);
 
         } catch (IOException e) {
             throw new RuntimeException("fail to store csv data: " + e.getMessage());
