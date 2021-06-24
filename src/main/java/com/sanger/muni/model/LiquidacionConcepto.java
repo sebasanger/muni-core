@@ -1,5 +1,6 @@
 package com.sanger.muni.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,11 +27,11 @@ public class LiquidacionConcepto {
     private Long id;
 
     @JsonBackReference
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "liquidacion_id", nullable = true)
     private Liquidacion liquidacion;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "concepto_id", nullable = true)
     private Concepto concepto;
 

@@ -6,8 +6,6 @@ import java.util.Set;
 import javax.transaction.Transactional;
 
 import com.sanger.muni.model.Liquidacion;
-import com.sanger.muni.model.LiquidacionConcepto;
-import com.sanger.muni.repository.LiquidacionConceptoRepository;
 import com.sanger.muni.repository.LiquidacionRepository;
 import com.sanger.muni.utils.CSVHelper;
 
@@ -21,20 +19,13 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ImportacionService {
 
-    private final LiquidacionConceptoRepository liquidacionConceptoRepository;
-
     private final LiquidacionRepository liquidacionRepository;
 
-    public void saveImportacion(MultipartFile liquidacionesFile, MultipartFile liquidacionesConceptosFile) {
+    public void saveImportacion(MultipartFile file) {
         try {
-            Set<Liquidacion> liquidaciones = CSVHelper.csvToLiquidaciones(liquidacionesFile.getInputStream());
-
-            Set<LiquidacionConcepto> liquidacionConceptos = CSVHelper
-                    .csvToLiquidacionConcepto(liquidacionesConceptosFile.getInputStream());
+            Set<Liquidacion> liquidaciones = CSVHelper.csvToLiquidaciones(file.getInputStream());
 
             liquidacionRepository.saveAll(liquidaciones);
-
-            // liquidacionConceptoRepository.saveAll(liquidacionConceptos);
 
         } catch (IOException e) {
             throw new RuntimeException("fail to store csv data: " + e.getMessage());

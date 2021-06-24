@@ -3,6 +3,8 @@ package com.sanger.muni.utils;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -10,7 +12,6 @@ import com.sanger.muni.model.Concepto;
 import com.sanger.muni.model.Liquidacion;
 import com.sanger.muni.model.LiquidacionConcepto;
 import com.sanger.muni.model.TipoConcepto;
-import com.sanger.muni.model.UserEntity;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -37,8 +38,6 @@ public class CSVHelper {
 
     public static Set<Liquidacion> csvToLiquidaciones(InputStream is) {
 
-        // "eleg,esec,edir,ecat,ecatnew,enom,edom,edoc,efing,banco,cuil,dire";
-
         try (BufferedReader fileReader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
                 CSVParser csvParser = new CSVParser(fileReader,
                         CSVFormat.DEFAULT.withFirstRecordAsHeader().withIgnoreHeaderCase().withTrim());) {
@@ -48,45 +47,23 @@ public class CSVHelper {
             Iterable<CSVRecord> csvRecords = csvParser.getRecords();
 
             for (CSVRecord csvRecord : csvRecords) {
+                LocalDate fecha = LocalDate.parse("10/" + csvRecord.get("periodo"),
+                        DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
-                Liquidacion liquidacion = new Liquidacion();
-                UserEntity user = new UserEntity();
-                user.setNumeroLegajo(csvRecord.get("eleg"));
-                user.setFullName(csvRecord.get("enom"));
-                user.setCuil(csvRecord.get("cuil"));
+                Liquidacion liquidacion = liquidaciones.stream()
+                        .filter(liquid -> liquid.getPeriodo().equals(fecha)
+                                && liquid.getLegajo().toString().equals(csvRecord.get("legajo")))
+                        .findFirst().orElse(new Liquidacion());
 
-                liquidacion.setUser(user);
+                liquidacion.setLegajo(Long.parseLong(csvRecord.get("legajo")));
 
-                liquidaciones.add(liquidacion);
-
-            }
-
-            return liquidaciones;
-        } catch (Exception e) {
-
-            System.err.println(e);
-            throw new RuntimeException("fail to parse CSV file: " + e.getMessage());
-        }
-    }
-
-    public static Set<LiquidacionConcepto> csvToLiquidacionConcepto(InputStream is) {
-        try (BufferedReader fileReader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-                CSVParser csvParser = new CSVParser(fileReader,
-                        CSVFormat.DEFAULT.withFirstRecordAsHeader().withIgnoreHeaderCase().withTrim());) {
-
-            Set<LiquidacionConcepto> liquidacionesConceptos = new HashSet<>();
-
-            Iterable<CSVRecord> csvRecords = csvParser.getRecords();
-
-            for (CSVRecord csvRecord : csvRecords) {
+                liquidacion.setPeriodo(fecha);
 
                 LiquidacionConcepto liquidacionConcepto = new LiquidacionConcepto();
-
                 Concepto concepto = new Concepto();
 
                 concepto.setId(Long.parseLong(csvRecord.get("concepto")));
                 concepto.setDescripcion(csvRecord.get("descrip"));
-                liquidacionConcepto.setConcepto(concepto);
 
                 if (Integer.parseInt(csvRecord.get("tipo")) == 1) {
                     concepto.setTipoConcepto(TipoConcepto.REMUNERATIVO);
@@ -101,12 +78,15 @@ public class CSVHelper {
                 liquidacionConcepto.setCantidad(Float.parseFloat(csvRecord.get("cantidad")));
                 liquidacionConcepto.setImporte(Double.parseDouble(csvRecord.get("importe")));
 
-                liquidacionesConceptos.add(liquidacionConcepto);
+                liquidacion.addLiquidacionConcepto(liquidacionConcepto);
+
+                liquidaciones.add(liquidacion);
 
             }
 
-            return liquidacionesConceptos;
+            return liquidaciones;
         } catch (Exception e) {
+
             System.err.println(e);
             throw new RuntimeException("fail to parse CSV file: " + e.getMessage());
         }

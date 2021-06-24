@@ -42,6 +42,8 @@ public class Liquidacion {
     @JoinColumn(name = "user_id", nullable = true)
     private UserEntity user;
 
+    private Long legajo;
+
     @ManyToOne
     @JoinColumn(name = "tipo_liquidacion_id", nullable = true)
     private TipoLiquidacion tipoLiquidacion;
