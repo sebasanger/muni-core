@@ -5,7 +5,11 @@ import java.util.Set;
 
 import javax.transaction.Transactional;
 
+import com.sanger.muni.model.Concepto;
 import com.sanger.muni.model.Liquidacion;
+import com.sanger.muni.model.LiquidacionConcepto;
+import com.sanger.muni.repository.ConceptoRepository;
+import com.sanger.muni.repository.LiquidacionConceptoRepository;
 import com.sanger.muni.repository.LiquidacionRepository;
 import com.sanger.muni.utils.CSVHelper;
 
@@ -21,11 +25,34 @@ public class ImportacionService {
 
     private final LiquidacionRepository liquidacionRepository;
 
+    private final LiquidacionConceptoRepository liquidacionConceptoRepository;
+
+    private final ConceptoRepository conceptoRepository;
+
     public void saveImportacion(MultipartFile file) {
         try {
             Set<Liquidacion> liquidaciones = CSVHelper.csvToLiquidaciones(file.getInputStream());
 
-            liquidacionRepository.saveAll(liquidaciones);
+            liquidaciones.forEach(liquidacion -> {
+
+                Set<LiquidacionConcepto> liquidacionConceptos = liquidacion.getLiquidacionConceptos();
+                liquidacionConceptos.forEach(liquidacionConcepto -> {
+                    Concepto concepto = liquidacionConcepto.getConcepto();
+
+                    if (concepto != null && conceptoRepository.findById(concepto.getId()).isEmpty()) {
+                        Concepto conceptoCreated = conceptoRepository.save(concepto);
+                        liquidacionConcepto.setConcepto(conceptoCreated);
+                    } else {
+                        liquidacionConcepto.setConcepto(conceptoRepository.findById(concepto.getId()).get());
+                    }
+
+                    liquidacionConceptoRepository.save(liquidacionConcepto);
+
+                });
+                if (liquidacion != null) {
+                    liquidacionRepository.save(liquidacion);
+                }
+            });
 
         } catch (IOException e) {
             throw new RuntimeException("fail to store csv data: " + e.getMessage());

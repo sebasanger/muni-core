@@ -29,8 +29,8 @@ public class ImportacionController {
 
                 return ResponseEntity.status(HttpStatus.ACCEPTED).body("Greet");
             } catch (Exception e) {
-
-                return ResponseEntity.status(HttpStatus.CONFLICT).body("Error");
+                System.err.println(e);
+                return ResponseEntity.status(HttpStatus.CONFLICT).body(e.fillInStackTrace().getMessage());
             }
         }
 

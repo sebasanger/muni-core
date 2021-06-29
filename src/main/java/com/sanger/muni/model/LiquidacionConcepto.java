@@ -27,11 +27,12 @@ public class LiquidacionConcepto {
     private Long id;
 
     @JsonBackReference
-    @ManyToOne(cascade = CascadeType.ALL)
+
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "liquidacion_id", nullable = true)
     private Liquidacion liquidacion;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "concepto_id", nullable = true)
     private Concepto concepto;
 
@@ -40,6 +41,9 @@ public class LiquidacionConcepto {
     private Double importe;
 
     public Double getSubtotal() {
+        if (cantidad == 0) {
+            cantidad = 1F;
+        }
         return this.cantidad * this.getImporte();
     }
 

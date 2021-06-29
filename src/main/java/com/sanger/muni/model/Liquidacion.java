@@ -47,12 +47,11 @@ public class Liquidacion {
     @ManyToOne
     @JoinColumn(name = "tipo_liquidacion_id", nullable = true)
     private TipoLiquidacion tipoLiquidacion;
-
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @Builder.Default
     @JsonManagedReference
-    @OneToMany(mappedBy = "liquidacion", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "liquidacion", orphanRemoval = true, cascade = CascadeType.MERGE)
     private Set<LiquidacionConcepto> liquidacionConceptos = new HashSet<>();
 
     private String area;
