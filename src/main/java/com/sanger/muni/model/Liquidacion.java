@@ -6,8 +6,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -44,9 +47,10 @@ public class Liquidacion {
 
     private Long legajo;
 
-    @ManyToOne
-    @JoinColumn(name = "tipo_liquidacion_id", nullable = true)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipoLiquidacion")
     private TipoLiquidacion tipoLiquidacion;
+
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @Builder.Default

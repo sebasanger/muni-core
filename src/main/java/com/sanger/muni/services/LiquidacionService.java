@@ -7,7 +7,6 @@ import com.sanger.muni.error.exceptions.EntityNotFoundException;
 import com.sanger.muni.model.Concepto;
 import com.sanger.muni.model.Liquidacion;
 import com.sanger.muni.model.LiquidacionConcepto;
-import com.sanger.muni.model.TipoLiquidacion;
 import com.sanger.muni.model.UserEntity;
 import com.sanger.muni.repository.LiquidacionConceptoRepository;
 import com.sanger.muni.repository.LiquidacionRepository;
@@ -19,7 +18,6 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class LiquidacionService extends BaseService<Liquidacion, Long, LiquidacionRepository> {
-    private final TipoLiquidacionService tipoLiquidacionService;
     private final UserEntityService userEntityService;
     private final ConceptoService conceptoService;
     private final LiquidacionConceptoRepository liquidacionConceptoRepository;
@@ -33,12 +31,6 @@ public class LiquidacionService extends BaseService<Liquidacion, Long, Liquidaci
                 .orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado"));
 
         liquidacion.setUser(user);
-
-        // Set Tipo Liquidacion by id
-        TipoLiquidacion tipoLiquidacion = tipoLiquidacionService.findById(newLiquidacionDto.getTipoLiquidacionId())
-                .orElseThrow(() -> new EntityNotFoundException("Tipo de liquidacion no encontrado"));
-
-        liquidacion.setTipoLiquidacion(tipoLiquidacion);
 
         newLiquidacionDto.getConceptos().forEach(concepto -> {
 
@@ -67,12 +59,6 @@ public class LiquidacionService extends BaseService<Liquidacion, Long, Liquidaci
 
         Liquidacion liquidacion = this.repository.findById(updateLiquidacionDto.getId())
                 .orElseThrow(() -> new EntityNotFoundException("Liquidacion no encotrada"));
-
-        // Set Tipo Liquidacion by id
-        TipoLiquidacion tipoLiquidacion = tipoLiquidacionService.findById(updateLiquidacionDto.getTipoLiquidacionId())
-                .orElseThrow(() -> new EntityNotFoundException("Tipo de liquidacion no encontrado"));
-
-        liquidacion.setTipoLiquidacion(tipoLiquidacion);
 
         updateLiquidacionDto.getConceptos().forEach(concepto -> {
 

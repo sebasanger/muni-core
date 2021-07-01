@@ -4,12 +4,6 @@ insert into areas (id, area, codigo) values (3,'Mesa de entrada', "ffad");
 insert into areas (id, area, codigo) values (4,'Gerencia', "dfgnbcv");
 insert into areas (id, area, codigo) values (5,'Pagos', "ertfgdfg");
 
-insert into tipos_liquidaciones (id, tipo) values (1,'Normal');
-insert into tipos_liquidaciones (id, tipo) values (2,'Extrordinaria');
-insert into tipos_liquidaciones (id, tipo) values (3,'Horas extras');
-insert into tipos_liquidaciones (id, tipo) values (4,'Extra');
-
-
 --USESRS--
 -- Contraseña: Admin1
 insert into users (id, full_name, email, username, password, created_at, last_password_change_at,enabled,cuil, cuit, sueldo_basico, area_id, numero_legajo) 

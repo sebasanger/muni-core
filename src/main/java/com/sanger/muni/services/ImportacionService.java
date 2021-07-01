@@ -32,19 +32,25 @@ public class ImportacionService {
     public void saveImportacion(MultipartFile file) {
         try {
             Set<Liquidacion> liquidaciones = CSVHelper.csvToLiquidaciones(file.getInputStream());
+            liquidaciones.forEach(liquidacion -> {
+
+                Set<LiquidacionConcepto> liquidacionConceptos = liquidacion.getLiquidacionConceptos();
+
+                liquidacionConceptos.forEach(liquidacionConcepto -> {
+
+                    conceptoRepository.save(liquidacionConcepto.getConcepto());
+
+                });
+            });
 
             liquidaciones.forEach(liquidacion -> {
 
                 Set<LiquidacionConcepto> liquidacionConceptos = liquidacion.getLiquidacionConceptos();
                 liquidacionConceptos.forEach(liquidacionConcepto -> {
-                    Concepto concepto = liquidacionConcepto.getConcepto();
+                    Concepto concepto = conceptoRepository.findById(liquidacionConcepto.getConcepto().getId())
+                            .orElse(conceptoRepository.findById(1L).get());
 
-                    if (concepto != null && conceptoRepository.findById(concepto.getId()).isEmpty()) {
-                        Concepto conceptoCreated = conceptoRepository.save(concepto);
-                        liquidacionConcepto.setConcepto(conceptoCreated);
-                    } else {
-                        liquidacionConcepto.setConcepto(conceptoRepository.findById(concepto.getId()).get());
-                    }
+                    liquidacionConcepto.setConcepto(concepto);
 
                     liquidacionConceptoRepository.save(liquidacionConcepto);
 

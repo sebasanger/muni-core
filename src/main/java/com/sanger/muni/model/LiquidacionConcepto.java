@@ -32,7 +32,7 @@ public class LiquidacionConcepto {
     @JoinColumn(name = "liquidacion_id", nullable = true)
     private Liquidacion liquidacion;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     @JoinColumn(name = "concepto_id", nullable = true)
     private Concepto concepto;
 
@@ -44,7 +44,8 @@ public class LiquidacionConcepto {
         if (cantidad == 0) {
             cantidad = 1F;
         }
-        return this.cantidad * this.getImporte();
+        // return this.cantidad * this.getImporte();
+        return this.getImporte();
     }
 
 }

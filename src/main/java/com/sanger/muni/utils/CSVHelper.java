@@ -12,6 +12,7 @@ import com.sanger.muni.model.Concepto;
 import com.sanger.muni.model.Liquidacion;
 import com.sanger.muni.model.LiquidacionConcepto;
 import com.sanger.muni.model.TipoConcepto;
+import com.sanger.muni.model.TipoLiquidacion;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -59,18 +60,30 @@ public class CSVHelper {
 
                 liquidacion.setPeriodo(fecha);
 
+                if (Integer.parseInt(csvRecord.get("tipo")) == 1) {
+                    liquidacion.setTipoLiquidacion(TipoLiquidacion.SUELDO);
+                } else if (Integer.parseInt(csvRecord.get("tipo")) == 2) {
+                    liquidacion.setTipoLiquidacion(TipoLiquidacion.AGUINALDO);
+                } else if (Integer.parseInt(csvRecord.get("tipo")) == 3) {
+                    liquidacion.setTipoLiquidacion(TipoLiquidacion.HORAS_EXTRAS);
+                } else if (Integer.parseInt(csvRecord.get("tipo")) == 4) {
+                    liquidacion.setTipoLiquidacion(TipoLiquidacion.AYUDA_ESCOLAR);
+                }
+
                 LiquidacionConcepto liquidacionConcepto = new LiquidacionConcepto();
                 Concepto concepto = new Concepto();
 
                 concepto.setId(Long.parseLong(csvRecord.get("concepto")));
                 concepto.setDescripcion(csvRecord.get("descrip"));
 
-                if (Integer.parseInt(csvRecord.get("tipo")) == 1) {
+                if (Integer.parseInt(csvRecord.get("acumulador")) == 1) {
                     concepto.setTipoConcepto(TipoConcepto.REMUNERATIVO);
-                } else if (Integer.parseInt(csvRecord.get("tipo")) == 2) {
+                } else if (Integer.parseInt(csvRecord.get("acumulador")) == 2) {
                     concepto.setTipoConcepto(TipoConcepto.NO_REMUNERATIVO);
-                } else if (Integer.parseInt(csvRecord.get("tipo")) == 3) {
+                } else if (Integer.parseInt(csvRecord.get("acumulador")) == 3) {
                     concepto.setTipoConcepto(TipoConcepto.DEDUCCION);
+                } else if (Integer.parseInt(csvRecord.get("acumulador")) == 4) {
+                    concepto.setTipoConcepto(TipoConcepto.APORTE_PATRONAL);
                 }
 
                 liquidacionConcepto.setConcepto(concepto);
