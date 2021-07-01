@@ -1,7 +1,6 @@
 package com.sanger.muni.controllers;
 
 import com.sanger.muni.services.ImportacionService;
-import com.sanger.muni.utils.CSVHelper;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,18 +22,19 @@ public class ImportacionController {
     @PostMapping("/uploadLiquidaciones")
     public ResponseEntity<String> uploadLiquidaciones(@RequestParam("file") MultipartFile file) {
 
-        if (CSVHelper.hasCSVFormat(file)) {
-            try {
-                importacionService.saveImportacion(file);
+        // if (CSVHelper.hasCSVFormat(file)) {
+        try {
+            importacionService.saveImportacion(file);
 
-                return ResponseEntity.status(HttpStatus.ACCEPTED).body("Greet");
-            } catch (Exception e) {
-                System.err.println(e);
-                return ResponseEntity.status(HttpStatus.CONFLICT).body(e.fillInStackTrace().getMessage());
-            }
+            return ResponseEntity.status(HttpStatus.CREATED).body("Greet");
+        } catch (Exception e) {
+            System.err.println(e);
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.fillInStackTrace().getMessage());
         }
+        // }
 
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal server error");
+        // return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal
+        // server error");
 
     }
 
