@@ -1,6 +1,5 @@
 package com.sanger.muni.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,7 +27,7 @@ public class LiquidacionConcepto {
 
     @JsonBackReference
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     @JoinColumn(name = "liquidacion_id", nullable = true)
     private Liquidacion liquidacion;
 

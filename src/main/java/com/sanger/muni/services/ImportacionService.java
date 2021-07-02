@@ -32,32 +32,22 @@ public class ImportacionService {
     public void saveImportacion(MultipartFile file) {
         try {
             Set<Liquidacion> liquidaciones = CSVHelper.csvToLiquidaciones(file.getInputStream());
+
             liquidaciones.forEach(liquidacion -> {
 
                 Set<LiquidacionConcepto> liquidacionConceptos = liquidacion.getLiquidacionConceptos();
-
                 liquidacionConceptos.forEach(liquidacionConcepto -> {
-
                     conceptoRepository.save(liquidacionConcepto.getConcepto());
 
-                });
-            });
-
-            liquidaciones.forEach(liquidacion -> {
-
-                Set<LiquidacionConcepto> liquidacionConceptos = liquidacion.getLiquidacionConceptos();
-                liquidacionConceptos.forEach(liquidacionConcepto -> {
-                    Concepto concepto = conceptoRepository.findById(liquidacionConcepto.getConcepto().getId())
-                            .orElse(conceptoRepository.findById(1L).get());
+                    Concepto concepto = conceptoRepository.findById(liquidacionConcepto.getConcepto().getId()).get();
 
                     liquidacionConcepto.setConcepto(concepto);
 
                     liquidacionConceptoRepository.save(liquidacionConcepto);
 
                 });
-                if (liquidacion != null) {
-                    liquidacionRepository.save(liquidacion);
-                }
+                liquidacionRepository.save(liquidacion);
+
             });
 
         } catch (IOException e) {

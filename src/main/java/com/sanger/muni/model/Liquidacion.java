@@ -55,7 +55,7 @@ public class Liquidacion {
     @ToString.Exclude
     @Builder.Default
     @JsonManagedReference
-    @OneToMany(mappedBy = "liquidacion", orphanRemoval = true, cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "liquidacion", orphanRemoval = true, cascade = CascadeType.PERSIST)
     private Set<LiquidacionConcepto> liquidacionConceptos = new HashSet<>();
 
     private String area;
