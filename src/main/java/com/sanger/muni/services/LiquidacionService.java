@@ -49,7 +49,6 @@ public class LiquidacionService extends BaseService<Liquidacion, Long, Liquidaci
         liquidacion.setFechaIngreso(newLiquidacionDto.getFechaIngreso());
         liquidacion.setPeriodo(newLiquidacionDto.getPeriodo());
         liquidacion.setSeccion(newLiquidacionDto.getSeccion());
-        liquidacion.setNumeroRecibo(newLiquidacionDto.getNumeroRecibo());
 
         return save(liquidacion);
 
@@ -77,7 +76,6 @@ public class LiquidacionService extends BaseService<Liquidacion, Long, Liquidaci
         liquidacion.setFechaIngreso(updateLiquidacionDto.getFechaIngreso());
         liquidacion.setPeriodo(updateLiquidacionDto.getPeriodo());
         liquidacion.setSeccion(updateLiquidacionDto.getSeccion());
-        liquidacion.setNumeroRecibo(updateLiquidacionDto.getNumeroRecibo());
 
         return save(liquidacion);
 

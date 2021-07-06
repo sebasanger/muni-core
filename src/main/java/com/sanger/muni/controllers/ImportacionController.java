@@ -20,11 +20,12 @@ public class ImportacionController {
     private final ImportacionService importacionService;
 
     @PostMapping("/uploadLiquidaciones")
-    public ResponseEntity<String> uploadLiquidaciones(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<String> uploadLiquidaciones(@RequestParam("conceptos") MultipartFile conceptos,
+            @RequestParam("maestro") MultipartFile maestro) {
 
         // if (CSVHelper.hasCSVFormat(file)) {
         try {
-            importacionService.saveImportacion(file);
+            importacionService.saveImportacion(conceptos, maestro);
 
             return ResponseEntity.status(HttpStatus.CREATED).body("Greet");
         } catch (Exception e) {

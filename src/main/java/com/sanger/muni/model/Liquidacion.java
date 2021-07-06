@@ -45,11 +45,13 @@ public class Liquidacion {
     @JoinColumn(name = "user_id", nullable = true)
     private UserEntity user;
 
-    private Long legajo;
-
     @Enumerated(EnumType.STRING)
     @Column(name = "tipoLiquidacion")
     private TipoLiquidacion tipoLiquidacion;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipoContratacion")
+    private TipoContratacion tipoContratacion;
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
@@ -57,6 +59,8 @@ public class Liquidacion {
     @JsonManagedReference
     @OneToMany(mappedBy = "liquidacion", orphanRemoval = true, cascade = CascadeType.PERSIST)
     private Set<LiquidacionConcepto> liquidacionConceptos = new HashSet<>();
+
+    private Long legajo;
 
     private String area;
 
@@ -66,7 +70,9 @@ public class Liquidacion {
 
     private String seccion;
 
-    private String numeroRecibo;
+    private String numeroCuenta;
+
+    private Short Categoria;
 
     @CreatedDate
     private LocalDateTime createdAt;

@@ -15,8 +15,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -60,6 +58,11 @@ public class UserEntity implements UserDetails {
 
 	private boolean enabled;
 
+	private String direccion;
+
+	@Column(unique = true, nullable = true)
+	private String dni;
+
 	@ElementCollection(fetch = FetchType.EAGER)
 	@Enumerated(EnumType.STRING)
 	private Set<UserRole> roles;
@@ -75,12 +78,6 @@ public class UserEntity implements UserDetails {
 
 	@Column(unique = true, nullable = true)
 	private String numeroLegajo;
-
-	private Double sueldoBasico;
-
-	@ManyToOne
-	@JoinColumn(name = "area_id", nullable = false)
-	private Area area;
 
 	@Builder.Default
 	private LocalDateTime lastPasswordChangeAt = LocalDateTime.now();

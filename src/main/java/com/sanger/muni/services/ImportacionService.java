@@ -11,6 +11,7 @@ import com.sanger.muni.model.LiquidacionConcepto;
 import com.sanger.muni.repository.ConceptoRepository;
 import com.sanger.muni.repository.LiquidacionConceptoRepository;
 import com.sanger.muni.repository.LiquidacionRepository;
+import com.sanger.muni.repository.UserEntityRepository;
 import com.sanger.muni.utils.CSVHelper;
 
 import org.springframework.stereotype.Service;
@@ -23,15 +24,18 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ImportacionService {
 
+    private final UserEntityRepository userEntityRepository;
+
     private final LiquidacionRepository liquidacionRepository;
 
     private final LiquidacionConceptoRepository liquidacionConceptoRepository;
 
     private final ConceptoRepository conceptoRepository;
 
-    public void saveImportacion(MultipartFile file) {
+    public void saveImportacion(MultipartFile conceptos, MultipartFile maestros) {
         try {
-            Set<Liquidacion> liquidaciones = CSVHelper.csvToLiquidaciones(file.getInputStream());
+            Set<Liquidacion> liquidaciones = CSVHelper.csvToLiquidaciones(conceptos.getInputStream(),
+                    maestros.getInputStream());
 
             liquidaciones.forEach(liquidacion -> {
 
@@ -46,6 +50,7 @@ public class ImportacionService {
                     liquidacionConceptoRepository.save(liquidacionConcepto);
 
                 });
+                userEntityRepository.save(liquidacion.getUser());
                 liquidacionRepository.save(liquidacion);
 
             });

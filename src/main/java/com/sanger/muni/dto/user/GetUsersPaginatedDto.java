@@ -2,8 +2,6 @@ package com.sanger.muni.dto.user;
 
 import java.util.Set;
 
-import com.sanger.muni.model.Area;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,7 +20,6 @@ public class GetUsersPaginatedDto {
 	private String fullName;
 	private String email;
 	private Set<String> roles;
-	private Area area;
 	private String numeroLegajo;
 
 }

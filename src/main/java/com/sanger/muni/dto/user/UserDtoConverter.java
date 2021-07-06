@@ -32,7 +32,7 @@ public class UserDtoConverter {
 
 	public GetUsersPaginatedDto convertUserEntityToGetUserPaginatedDto(UserEntity user) {
 		return GetUsersPaginatedDto.builder().id(user.getId()).username(user.getUsername()).fullName(user.getFullName())
-				.email(user.getEmail()).area(user.getArea()).numeroLegajo(user.getNumeroLegajo())
+				.email(user.getEmail()).numeroLegajo(user.getNumeroLegajo())
 				.roles(user.getRoles().stream().map(UserRole::name).collect(Collectors.toSet())).build();
 	}
 
