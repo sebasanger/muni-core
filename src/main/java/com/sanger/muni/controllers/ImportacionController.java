@@ -2,7 +2,6 @@ package com.sanger.muni.controllers;
 
 import com.sanger.muni.services.ImportacionService;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,10 +26,11 @@ public class ImportacionController {
         try {
             importacionService.saveImportacion(conceptos, maestro);
 
-            return ResponseEntity.status(HttpStatus.CREATED).body("Greet");
+            return ResponseEntity.accepted().build();
         } catch (Exception e) {
             System.err.println(e);
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.fillInStackTrace().getMessage());
+
+            return ResponseEntity.badRequest().build();
         }
         // }
 
